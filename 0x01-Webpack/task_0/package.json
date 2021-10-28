@@ -1,11 +1,16 @@
 {
-  "name": "webpack-holberton",
+  "name": "webpack_task_0",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack --mode development",
     "build": "webpack --mode production"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
     "webpack": "^5.60.0",
     "webpack-cli": "^4.9.1"
