@@ -11,17 +11,17 @@ function App() {
       </div>
       <div className="App-body">
         <div className="container">
-        <p>Login to access the full dashboard</p>
-        <label htmlFor="email">Email</label>
-        <input type="email" id="email" />
-        <label htmlFor="password">Password</label>
-        <input type="password" id="password" />
-        <button>OK</button>
+          <p>Login to access the full dashboard</p>
+          <label htmlFor="email">Email: </label>
+          <input type="email" id="email" />
+          <label htmlFor="password">Password: </label>
+          <input type="password" id="password" />
+          <button>OK</button>
         </div>
       </div>
       <footer>
         <div className="App-footer">
-          <p>Copyright {getFullYear()} - {getFooterCopy()}</p>
+          <p>Copyright {getFullYear()} - {getFooterCopy(true)}</p>
         </div>
       </footer>
     </div>

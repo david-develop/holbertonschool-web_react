@@ -37,6 +37,17 @@
   margin: 0 auto;
 }
 
+.App-body label,
+.App-body input {
+  margin-right: .7rem;
+}
+
+.App-body button {
+  border-radius: 25%;
+  border-color: lightgray;
+  background-color: transparent;
+}
+
 .App-footer {
   position: absolute;
   bottom: 0;
