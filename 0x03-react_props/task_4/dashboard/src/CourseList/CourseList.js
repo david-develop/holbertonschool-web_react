@@ -1,6 +1,6 @@
 import React from 'react';
 import CourseListRow from './CourseListRow';
-import './CourseLis.css';
+import './CourseList.css';
 
 const CourseList = () => {
   return (
