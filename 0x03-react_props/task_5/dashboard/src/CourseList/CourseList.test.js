@@ -4,7 +4,7 @@ import CourseList from './CourseList';
 
 describe('<CourseList />', () => {
   let listCourses;
-  it('test that CourseList renders without crashing', () => {
+  it('test that CourseList Empty renders without crashing', () => {
     const wrapper = shallow(<CourseList />);
     expect(wrapper.exists()).toEqual(true);
   });
@@ -14,7 +14,7 @@ describe('<CourseList />', () => {
     expect(wrapper.find('CourseListRow').length).toEqual(3);
   });
 
-  describe('CourseList with list of courses', () => {
+  describe('CourseList containing elements', () => {
     beforeEach(() => {
       listCourses = [
         { id: 1, name: 'ES6', credit: 60 },
