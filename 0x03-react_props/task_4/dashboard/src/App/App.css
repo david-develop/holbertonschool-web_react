@@ -9,6 +9,8 @@
 .App-body {
   margin: 0;
   padding: 0;
+  display: flex;
+  justify-content: center;
 }
 .App-body .container {
   position: relative;

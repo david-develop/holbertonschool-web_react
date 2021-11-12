@@ -20,7 +20,7 @@ describe('<NotificationItem />', () => {
   });
 
   it('Verify that by passing dummy type and value props, it renders the correct html', () => {
-    const wrapper = shallow(<NotificationItem type='urgent' html='test' />);
+    const wrapper = shallow(<NotificationItem type='urgent' html={{__html: 'test'}} />);
     expect(wrapper.props()['data-priority']).toEqual('urgent');
     expect(wrapper.html()).toEqual('<li data-priority="urgent">test</li>');
   });

@@ -14,7 +14,7 @@ const CourseListRow = (props) => {
       element = [<th key="1">{textFirstCell}</th>, <th key="2">{textSecondCell}</th>];
     }
   } else {
-    element = [<th key="1">{textFirstCell}</th>, <th key="2">{textSecondCell}</th>];
+    element = [<td key="1">{textFirstCell}</td>, <td key="2">{textSecondCell}</td>];
   }
   return (
     <tr>{element}</tr>

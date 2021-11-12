@@ -4,7 +4,7 @@ import './CourseList.css';
 
 const CourseList = () => {
   return (
-    <table id="CourseList">
+    <table id="CourseList" className="container">
       <thead>
         <CourseListRow textFirstCell="Available courses" isHeader={true} />
         <CourseListRow textFirstCell="Course name" textSecondCell="Credit" isHeader={true} />

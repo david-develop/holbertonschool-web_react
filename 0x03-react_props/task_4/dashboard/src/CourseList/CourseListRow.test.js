@@ -31,7 +31,7 @@ describe('<CourseListRow />', () => {
     const textFirstCell = "Available courses";
     const textSecondCell ="Credit";
     const wrapper = shallow(<CourseListRow isHeader={false} textFirstCell={textFirstCell} textSecondCell={textSecondCell} />);
-    const element = wrapper.find('th');
+    const element = wrapper.find('td');
 
     expect(element.length).toEqual(2);
   });
