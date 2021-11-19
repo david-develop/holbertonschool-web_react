@@ -1,0 +1,32 @@
+.root-notifications {
+    position: fixed;
+    right: 0;
+}
+
+.Notifications {
+    float: right;
+    border: .1rem dashed #e1003c;
+    padding: .5rem;
+    margin-bottom: 20px;
+}
+
+[data-priority="urgent"] {
+    color: red;
+}
+
+[data-priority="default"] {
+    color: blue;
+}
+
+.menuItem {
+    text-align: right;
+    margin: .3rem;
+}
+
+.Notifications p {
+    margin-top: 15px;
+}
+
+.Notifications ul {
+    padding-right: 5rem;
+}
