@@ -7,6 +7,8 @@ import Footer from '../Footer/Footer';
 import CourseList from '../CourseList/CourseList';
 import { getLatestNotification } from '../utils/utils';
 import propTypes from "prop-types";
+import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
+import BodySection from '../BodySection/BodySection';
 
 const listCourses = [
   { id: 1, name: 'ES6', credit: 60 },
@@ -43,8 +45,14 @@ class App extends React.Component {
 
   render() {
     const { isLoggedIn, logOut } = this.props;
-    let element = <Login />;
-    if (isLoggedIn === true) element = <CourseList listCourses={listCourses} />;
+    let element = <BodySectionWithMarginBottom title="Log in to continue">
+      <Login />
+    </BodySectionWithMarginBottom>;
+    if (isLoggedIn === true) {
+      element = <BodySectionWithMarginBottom title="Course list">
+        <CourseList listCourses={listCourses} />
+      </BodySectionWithMarginBottom>
+    };
     return (
       <>
         <div className="root-notifications">
@@ -53,6 +61,9 @@ class App extends React.Component {
         <div className="App">
           <Header />
           {element}
+          <BodySection title="News from the School">
+            <p>Loren ispsum randome text, Loren ispsum randome text, Loren ispsum randome text</p>
+          </BodySection>
           <Footer />
         </div>
       </>

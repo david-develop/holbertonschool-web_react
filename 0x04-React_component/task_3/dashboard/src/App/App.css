@@ -12,7 +12,8 @@
   display: flex;
   justify-content: center;
 }
-.App-body .container {
+
+.App .container {
   position: relative;
   width: 100%;
   max-width: 1170px;

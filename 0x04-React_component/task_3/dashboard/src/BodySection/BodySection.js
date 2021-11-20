@@ -9,8 +9,9 @@ class BodySection extends React.Component {
   render() {
     const { children, title } = this.props;
     return (
-      <div className="bodySection">
+      <div className="bodySection" className="container">
         <h2>{title}</h2>
+        {children}
       </div>
     );
   }
