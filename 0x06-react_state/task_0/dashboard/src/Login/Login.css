@@ -1,0 +1,10 @@
+label,
+input {
+  margin-right: .7rem;
+}
+
+button {
+  border-radius: 25%;
+  border-color: lightgray;
+  background-color: transparent;
+}
