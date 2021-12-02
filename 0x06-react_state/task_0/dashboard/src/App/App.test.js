@@ -32,5 +32,19 @@ describe('<App />', () => {
     expect(window.alert).toHaveBeenCalledWith('Logging you out');
     jest.restoreAllMocks();
   });
+
+  it('Verify that the default state for displayDrawer is false. Verify that after calling handleDisplayDrawer, the state should now be true', () => {
+    const wrapper = shallow(<App />);
+    expect(wrapper.state('displayDrawer')).toEqual(false);
+    wrapper.instance().handleDisplayDrawer();
+    expect(wrapper.state('displayDrawer')).toEqual(true);
+  });
+
+  it('Add a test to verify that after calling handleHideDrawer, the state is updated to be false', () => {
+    const wrapper = shallow(<App />);
+    wrapper.setState({ displayDrawer: true });
+    wrapper.instance().handleHideDrawer();
+    expect(wrapper.state('displayDrawer')).toEqual(false);
+  });
 });
 

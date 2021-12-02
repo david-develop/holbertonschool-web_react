@@ -176,4 +176,21 @@ describe('<Notifications />', () => {
     });
 
   });
+
+  describe('verify the function handleDisplayDrawer and handleHideDrawer', () => {
+    it('verify that clicking on the menu item calls handleDisplayDrawer', () => {
+      const handleDisplayDrawer = jest.fn();
+      const wrapper = shallow(<Notifications displayDrawer={false} handleDisplayDrawer={handleDisplayDrawer}/>);
+      const element = wrapper.find('#menuItem');
+      element.simulate('click');
+      expect(handleDisplayDrawer).toHaveBeenCalled();
+    });
+    it('verify that clicking on the button calls handleHideDrawer', () => {
+      const handleHideDrawer = jest.fn();
+      const wrapper = shallow(<Notifications displayDrawer={true} handleHideDrawer={handleHideDrawer}/>);
+      const element = wrapper.find('#btnClose');
+      element.simulate('click');
+      expect(handleHideDrawer).toHaveBeenCalled();
+    });
+  });
 });

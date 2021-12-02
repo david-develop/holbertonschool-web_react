@@ -26,6 +26,23 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.handleKeyCombination = this.handleKeyCombination.bind(this);
+    this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
+    this.handleHideDrawer = this.handleHideDrawer.bind(this);
+    this.state = {
+      displayDrawer: false
+    };
+  }
+
+  handleDisplayDrawer() {
+    this.setState({
+      displayDrawer: true
+    });
+  }
+
+  handleHideDrawer() {
+    this.setState({
+      displayDrawer: false
+    });
   }
 
   handleKeyCombination(e) {
@@ -47,7 +64,7 @@ class App extends React.Component {
     const { isLoggedIn, logOut } = this.props;
     return (
       <div className={css(styles.general)}>
-        <Notifications listNotifications={listNotifications} />
+        <Notifications listNotifications={listNotifications} displayDrawer={this.state.displayDrawer} handleDisplayDrawer={this.handleDisplayDrawer} handleHideDrawer={this.handleHideDrawer}/>
         <div className={css(styles.app)}>
           <Header />
         </div>
