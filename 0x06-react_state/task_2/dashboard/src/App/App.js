@@ -5,10 +5,11 @@ import Login from '../Login/Login';
 import Footer from '../Footer/Footer';
 import CourseList from '../CourseList/CourseList';
 import { getLatestNotification } from '../utils/utils';
-import propTypes from "prop-types";
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
 import BodySection from '../BodySection/BodySection';
 import { StyleSheet, css } from 'aphrodite';
+import { user, logOut } from "./AppContext";
+import AppContext from "./AppContext";
 
 const listCourses = [
   { id: 1, name: 'ES6', credit: 60 },
@@ -28,8 +29,12 @@ class App extends React.Component {
     this.handleKeyCombination = this.handleKeyCombination.bind(this);
     this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
     this.handleHideDrawer = this.handleHideDrawer.bind(this);
+    this.logIn = this.logIn.bind(this);
+    this.logOut = this.logOut.bind(this);
     this.state = {
-      displayDrawer: false
+      displayDrawer: false,
+      user,
+      logOut: this.logOut
     };
   }
 
@@ -48,8 +53,22 @@ class App extends React.Component {
   handleKeyCombination(e) {
     if (e.key === 'h' && e.ctrlKey) {
       window.alert('Logging you out');
-      this.props.logOut();
+      this.state.logOut();
     }
+  }
+
+  logIn(email, password) {
+    this.setState({
+      user: {
+        email,
+        password,
+        isLoggedIn: true,
+      },
+    });
+  }
+
+  logOut() {
+    this.setState({ user });
   }
 
   componentDidMount() {
@@ -61,47 +80,47 @@ class App extends React.Component {
   }
 
   render() {
-    const { isLoggedIn, logOut } = this.props;
-    return (
-      <div className={css(styles.general)}>
-        <Notifications listNotifications={listNotifications} displayDrawer={this.state.displayDrawer} handleDisplayDrawer={this.handleDisplayDrawer} handleHideDrawer={this.handleHideDrawer}/>
-        <div className={css(styles.app)}>
-          <Header />
-        </div>
-        <div className={css(styles.body)}>
-          {!isLoggedIn ? (
-            <BodySectionWithMarginBottom title="Log in to continue">
-              <Login />
-            </BodySectionWithMarginBottom>
-          ) : (
-            <BodySectionWithMarginBottom title="Course list">
-              <CourseList listCourses={listCourses} />
-            </BodySectionWithMarginBottom>
-          )}
-        </div>
-        <div className={css(styles.bodyFeed)}>
-          <BodySection title="News from the School">
-            <p>Some Random Text</p>
-          </BodySection>
-        </div>
+    const { logOut, displayDrawer, user } = this.state;
+    const isLoggedIn = user.isLoggedIn;
 
-        <div className={css(styles.footer)}>
-          <Footer />
+    const value = { user, logOut };
+
+    return (
+      <AppContext.Provider value={value}>
+        <div className={css(styles.general)}>
+          <Notifications listNotifications={listNotifications} displayDrawer={displayDrawer} handleDisplayDrawer={this.handleDisplayDrawer} handleHideDrawer={this.handleHideDrawer} />
+          <div className={css(styles.app)}>
+            <Header />
+          </div>
+          <div className={css(styles.body)}>
+            {!isLoggedIn ? (
+              <BodySectionWithMarginBottom title="Log in to continue">
+                <Login logIn={this.logIn} />
+              </BodySectionWithMarginBottom>
+            ) : (
+              <BodySectionWithMarginBottom title="Course list">
+                <CourseList listCourses={listCourses} />
+              </BodySectionWithMarginBottom>
+            )}
+          </div>
+          <div className={css(styles.bodyFeed)}>
+            <BodySection title="News from the School">
+              <p>Some Random Text</p>
+            </BodySection>
+          </div>
+
+          <div className={css(styles.footer)}>
+            <Footer />
+          </div>
         </div>
-      </div>
+      </AppContext.Provider>
     );
   }
 }
 
-App.defaultProps = {
-  isLoggedIn: false,
-  logOut: () => { },
-};
+App.defaultProps = {};
 
-App.propTypes = {
-  isLoggedIn: propTypes.bool,
-  logOut: propTypes.func,
-};
+App.propTypes = {};
 
 const cssVars = {
   mainColor: "#e01d3f",

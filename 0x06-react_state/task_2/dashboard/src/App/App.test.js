@@ -2,7 +2,7 @@ import 'jsdom-global/register';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import App from './App';
-
+import AppContext, { user, logOut } from "../App/AppContext";
 
 describe('<App />', () => {
   it('test that App renders without crashing', () => {
@@ -16,7 +16,13 @@ describe('<App />', () => {
   });
 
   it('Verify that when isLoggedIn is true verify that the Login component is not included', () => {
-    const wrapper = shallow(<App isLoggedIn={true} />);
+    const user = {
+      isLoggedIn: true,
+      email: 'test@test.com',
+      password: 'test'
+    };
+    const wrapper = shallow(<App />);
+    wrapper.setState({ user });
     expect(wrapper.find('Login').length).toEqual(0);
     expect(wrapper.find('CourseList').length).toEqual(1);
   });
@@ -25,7 +31,7 @@ describe('<App />', () => {
     window.alert = jest.fn()
     const wrapper = mount(<App />);
     const logOut = jest.fn();
-    wrapper.setProps({ logOut });
+    wrapper.setState({ logOut });
     const keysPress = new KeyboardEvent('keydown', { key: 'h', ctrlKey: true });
     document.dispatchEvent(keysPress);
     expect(logOut).toHaveBeenCalledTimes(1);
@@ -45,6 +51,54 @@ describe('<App />', () => {
     wrapper.setState({ displayDrawer: true });
     wrapper.instance().handleHideDrawer();
     expect(wrapper.state('displayDrawer')).toEqual(false);
+  });
+
+  it('test to verify that the logIn function updates the state correctly', () => {
+    const wrapper = mount(
+      <AppContext.Provider value={{ user, logOut }}>
+        <App />
+      </AppContext.Provider>
+    );
+
+    const userN = {
+      isLoggedIn: true,
+      email: 'test@test.com',
+      password: 'test'
+    };
+
+    const instance = wrapper.instance();
+
+    expect(wrapper.state().user).toEqual(user);
+
+    instance.logIn(userN.email, userN.password);
+
+    expect(wrapper.state().user).toEqual(userN);
+  });
+
+  it('test to verify that the logOut function updates the state correctly', () => {
+    const wrapper = mount(
+      <AppContext.Provider value={{ user, logOut }}>
+        <App />
+      </AppContext.Provider>
+    );
+
+    const userN = {
+      isLoggedIn: true,
+      email: 'test@test.com',
+      password: 'test'
+    };
+
+    const instance = wrapper.instance();
+
+    expect(wrapper.state().user).toEqual(user);
+
+    instance.logIn(userN.email, userN.password);
+
+    expect(wrapper.state().user).toEqual(userN);
+
+    instance.logOut();
+
+    expect(wrapper.state().user).toEqual(user);
   });
 });
 

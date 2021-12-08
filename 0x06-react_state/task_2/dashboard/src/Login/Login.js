@@ -7,7 +7,6 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoggedIn: false,
       email: '',
       password: '',
       enableSubmit: false,
@@ -19,7 +18,8 @@ class Login extends React.Component {
 
   handleLoginSubmit(e) {
     e.preventDefault();
-    this.setState({ isLoggedIn: true });
+    const { email, password } = this.state;
+    this.props.logIn(email, password);
   };
 
   handleChangeEmail(e) {
@@ -51,14 +51,6 @@ class Login extends React.Component {
     );
   }
 }
-
-Login.propTypes = {
-  isLoggedIn: propTypes.bool,
-};
-
-Login.defaultProps = {
-  isLoggedIn: false,
-};
 
 const styles = StyleSheet.create({
   login: {
