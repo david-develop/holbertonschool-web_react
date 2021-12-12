@@ -1,8 +1,8 @@
 import { LOGIN, LOGOUT, DISPLAY_NOTIFICATION_DRAWER, HIDE_NOTIFICATION_DRAWER, LOGIN_SUCCESS, LOGIN_FAILURE } from './uiActionTypes';
-import { login, logout, displayNotificationDrawer, hideNotificationDrawer } from './uiActionCreators';
-import fetchMock from "fetch-mock";
-import configureStore from "redux-mock-store";
-import thunk from "redux-thunk";
+import { login, logout, displayNotificationDrawer, hideNotificationDrawer, loginRequest, loginSuccess, loginFailure } from './uiActionCreators';
+import fetchMock from 'fetch-mock';
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
@@ -48,31 +48,35 @@ describe('Async loginRequest action Test', () => {
       email,
       password,
     };
-    fetchMock.get("http://localhost:8564/login-success.json", "{}");
 
-    store.dispatch(loginRequest(mockUser.email, mockUser.password))
+    fetchMock.get('http://localhost:8564/login-success.json', '{}');
+
+    return store.dispatch(loginRequest(mockUser.email, mockUser.password))
       .then(() => {
         const actions = store.getActions();
         expect(actions[0]).toEqual(login(mockUser.email, mockUser.password));
         expect(actions[1]).toEqual(loginSuccess());
       });
   });
-  // it('test should verify that if the API query fails, the store received two actions LOGIN and LOGIN_FAILURE', () => {
-  //   const email = 'test@test.com';
-  //   const password = 'test';
-  //   const response = {
-  //     user: {
-  //       email,
-  //       password,
-  //     },
-  //   };
-  //   const store = mockStore({});
-  //   const expectedActions = [
-  //     { type: LOGIN, user: { email, password } },
-  //     { type: LOGIN_FAILURE, user: response.user },
-  //   ];
 
-  //   store.dispatch(loginRequest(email, password));
-  //   expect(store.getActions()).toEqual(expectedActions);
-  // });
+  it('Verify that if the API query fails, the store received two actions LOGIN and LOGIN_FAILURE', () => {
+    const store = mockStore({});
+    fetchMock.restore();
+    const email = 'test@test.com';
+    const password = 'test';
+    const mockUser = {
+      email,
+      password,
+    };
+
+    fetchMock.mock('http://localhost:8564/login-success.json', 500);
+
+    return store
+      .dispatch(loginRequest(mockUser.email, mockUser.password))
+      .then(() => {
+        const actions = store.getActions();
+        expect(actions[0]).toEqual(login(mockUser.email, mockUser.password));
+        expect(actions[1]).toEqual(loginFailure());
+      });
+  });
 });

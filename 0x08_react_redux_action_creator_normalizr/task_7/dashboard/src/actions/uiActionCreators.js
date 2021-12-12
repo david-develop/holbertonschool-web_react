@@ -1,5 +1,5 @@
+import 'node-fetch';
 import { LOGIN, LOGOUT, DISPLAY_NOTIFICATION_DRAWER, HIDE_NOTIFICATION_DRAWER, LOGIN_SUCCESS, LOGIN_FAILURE } from './uiActionTypes';
-import "node-fetch";
 
 export const login = (email, password) => ({
   type: LOGIN,
@@ -29,10 +29,12 @@ export const loginFailure = () => ({
   type: LOGIN_FAILURE,
 });
 
-export const loginRequest = (email, password) => (dispatch) => {
-  dispatch(login(email, password));
-  return fetch("http://localhost:8564/login-success.json")
-    .then((res) => res.json())
-    .then((json) => dispatch(loginSuccess()))
-    .catch((error) => dispatch(loginFailure()));
+export const loginRequest = (email, password) => {
+  return (dispatch) => {
+    dispatch(login(email, password));
+    return fetch("http://localhost:8564/login-success.json")
+      .then((res) => res.json())
+      .then((json) => dispatch(loginSuccess()))
+      .catch((error) => dispatch(loginFailure()));
+  }
 };
