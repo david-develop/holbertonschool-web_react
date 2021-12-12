@@ -7,17 +7,9 @@ export const selectCourse = (index) => {
   };
 };
 
-export const boundSelectCourse = (index) => {
-  dispatch(selectCourse(index))
-};
-
 export const unSelectCourse = (index) => {
   return {
     type: UNSELECT_COURSE,
     index,
   };
-};
-
-export const boundunSelectCourse = (index) => {
-  dispatch(unSelectCourse(index))
 };
