@@ -140,6 +140,7 @@ describe('mapStateToProps', () => {
     let state = fromJS({
       isUserLoggedIn: true
     });
+
     expect(mapStateToProps(state)).toEqual({
       isLoggedIn: true
     });
