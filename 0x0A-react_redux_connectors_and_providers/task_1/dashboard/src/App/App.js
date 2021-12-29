@@ -11,6 +11,7 @@ import { StyleSheet, css } from 'aphrodite';
 import { user, logOut } from './AppContext';
 import AppContext from './AppContext';
 import { connect } from 'react-redux';
+import propTypes from "prop-types";
 import {
   displayNotificationDrawer,
   hideNotificationDrawer,
@@ -32,29 +33,14 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.handleKeyCombination = this.handleKeyCombination.bind(this);
-    this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
-    this.handleHideDrawer = this.handleHideDrawer.bind(this);
     this.logIn = this.logIn.bind(this);
     this.logOut = this.logOut.bind(this);
     this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
     this.state = {
-      displayDrawer: false,
       user,
       logOut: this.logOut,
       listNotifications: listNotificationsInit,
     };
-  }
-
-  handleDisplayDrawer() {
-    this.setState({
-      displayDrawer: true
-    });
-  }
-
-  handleHideDrawer() {
-    this.setState({
-      displayDrawer: false
-    });
   }
 
   handleKeyCombination(e) {
@@ -95,8 +81,13 @@ class App extends React.Component {
   }
 
   render() {
-    const { logOut, displayDrawer, user, listNotifications } = this.state;
-    const isLoggedIn = user.isLoggedIn;
+    const { logOut, user, listNotifications } = this.state;
+    const {
+      isLoggedIn,
+      displayDrawer,
+      displayNotificationDrawer,
+      hideNotificationDrawer,
+    } = this.props;
 
     const value = { user, logOut };
 
@@ -106,8 +97,8 @@ class App extends React.Component {
           <Notifications
             listNotifications={listNotifications}
             displayDrawer={displayDrawer}
-            handleDisplayDrawer={this.handleDisplayDrawer}
-            handleHideDrawer={this.handleHideDrawer}
+            handleDisplayDrawer={displayNotificationDrawer}
+            handleHideDrawer={hideNotificationDrawer}
             markNotificationAsRead={this.markNotificationAsRead} />
           <div className={css(styles.app)}>
             <Header />
@@ -138,9 +129,19 @@ class App extends React.Component {
   }
 }
 
-App.defaultProps = {};
+App.defaultProps = {
+  isLoggedIn: false,
+  displayDrawer: false,
+  displayNotificationDrawer: () => {},
+  hideNotificationDrawer: () => {},
+};
 
-App.propTypes = {};
+App.propTypes = {
+  isLoggedIn: propTypes.bool,
+  displayDrawer: propTypes.bool,
+  displayNotificationDrawer: propTypes.func,
+  hideNotificationDrawer: propTypes.func,
+};
 
 const cssVars = {
   mainColor: "#e01d3f",
